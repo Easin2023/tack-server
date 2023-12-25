@@ -73,6 +73,17 @@ async function run() {
           .send({ error: "An error occurred while processing your request" });
       }
     });
+    app.delete("/delete/:id", async (req, res) => {
+      try{
+        const id = req.params.id;
+        const result = await TackDataCollection.deleteOne({_id: new ObjectId(id)})
+        res.send(result)
+      }
+      catch(err){
+        console.log(err)
+      }
+    })
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
